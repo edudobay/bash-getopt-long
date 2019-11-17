@@ -27,6 +27,7 @@ getopt_long() {
 	index=$OPTIND
 	for (( index=OPTIND; index<=${#args[@]}; index++ )); do
 		arg=${args[$((index-1))]}
+		foundopt=${arg#-}
 
 		if [[ $arg != -* ]]; then
 			echo "error: illegal option: $arg" 1>&2
@@ -34,7 +35,12 @@ getopt_long() {
 			return 1
 		fi
 
-		foundopt=${arg#-}
+		if [[ -z $foundopt ]]; then
+			echo "error: illegal option: $arg" 1>&2
+			printf -v "$varname" '?'
+			return 1
+		fi
+
 		declaredopt=${optmap[$foundopt]}
 		if [[ -z $declaredopt ]]; then
 			echo "error: illegal option: $arg" 1>&2

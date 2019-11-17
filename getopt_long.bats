@@ -85,3 +85,8 @@ load getopt_long
 	getopt_long 'name:' GETOPT_OPT -name && return 1
 	[[ $GETOPT_OPT == '?' ]]
 }
+
+@test "returns error for '-' option" {
+	getopt_long 'quiet' GETOPT_OPT - && return 1
+	[[ $GETOPT_OPT == '?' ]]
+}
