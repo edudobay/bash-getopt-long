@@ -51,7 +51,7 @@ getopt_long() {
 			return 1
 		else
 			OPTARG=${args[$index]}
-            (( index++ ))
+			(( index++ ))
 		fi
 
 		printf -v "$varname" %s "$foundopt"
